@@ -30,7 +30,6 @@ Thumbs.db
 # Build locks
 package-lock.json
 yarn.lock
-pnpm-lock.yaml
 
 # Deployment
 .vercel
