@@ -9,8 +9,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck",
-    "nuxt:hub-push": "nuxt hub push"
+    "typecheck": "nuxt typecheck"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.34",
@@ -24,6 +23,7 @@
     "@unovis/vue": "^1.5.1",
     "@vueuse/motion": "^3.0.3",
     "@vueuse/nuxt": "^13.0.0",
+    "better-sqlite3": "^12.2.0",
     "chart.js": "^4.4.9",
     "date-fns": "^4.1.0",
     "ipx": "3.0.3",
@@ -42,8 +42,7 @@
     "eslint": "^9.23.0",
     "nuxi": "^3.25.0",
     "typescript": "^5.8.2",
-    "vue-tsc": "^2.2.0",
-    "wrangler": "^4.14.3"
+    "vue-tsc": "^2.2.0"
   },
   "resolutions": {
     "unimport": "4.1.1",

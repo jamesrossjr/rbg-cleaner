@@ -2,7 +2,6 @@
 export default defineNuxtConfig({
   // 🌐 Modules
   modules: [
-    '@nuxthub/core',
     '@nuxt/ui-pro',
     '@nuxt/content',
     '@nuxt/image',
@@ -20,8 +19,7 @@ export default defineNuxtConfig({
   
   runtimeConfig: {
     public: {
-      NUXT_UI_PRO_LICENSE: process.env.NUXT_UI_PRO_LICENSE,
-      NUXT_HUB_PROJECT_KEY: process.env.NUXT_HUB_PROJECT_KEY
+      NUXT_UI_PRO_LICENSE: process.env.NUXT_UI_PRO_LICENSE
     }
   },
 
@@ -58,8 +56,7 @@ export default defineNuxtConfig({
         '/dashboard/settings/security',
         '/dashboard/settings/notifications'
       ]
-    },
-    preset: 'cloudflare-pages'
+    }
   },
   
   // Meta / Favicon etc for Devices (IOS & Android)
