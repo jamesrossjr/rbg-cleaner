@@ -1,0 +1,44 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+.vscode
+Thumbs.db
+*.swp
+*.swo
+*.bak
+
+# Local env files
+
+!.env.example
+
+# Build locks
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Deployment
+.vercel
+.netlify
+
+# Coverage and test results
+coverage/
+test-results/
+
+# VSC
+.history

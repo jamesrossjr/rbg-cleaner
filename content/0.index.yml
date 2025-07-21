@@ -1,0 +1,289 @@
+title: Right Brain Group - Website & Brand Development 2025
+description: Unlock the full potential of your online presence with Right Brain Group. Our expert team specializes in dynamic websites and brand development, tailored for savvy businesses that DEMAND RESULTS. Elevate your digital footprint today.
+
+hero:
+  image:
+    src: /images/dr-brain.webp
+    width: 260
+    height: 260
+    alt: Dr. Brain illustration
+  title: Systems. Strategy. Scalability.
+  description: Scale your business operations without scaling complexity.
+  links:
+    - label: Talk Strategy
+      icon: i-lucide-message-circle-more
+      trailing: false
+      to: /contact
+      target: _blank
+      size: xl
+    - label: View Work
+      icon: i-lucide-microscope
+      size: xl
+      color: neutral
+      variant: subtle
+      to: '#services'
+      target: _blank
+
+section1:
+  title: From Frustration to Focused Growth
+  description: Our clients came to us with big goals—they wanted to attract more leads, convert visitors into customers, and scale their business. But along the way, they ran into hurdles...
+  id: section
+  image:
+    src: /images/rbg-1.png
+    width: 1200
+    height: 800
+    alt: From Frustration to Focused Growth
+  orientation: horizontal
+  features:
+    - title: Their strategies weren’t delivering the expected results.
+      description: They were investing in marketing, sales, and operations, but growth felt slow and unpredictable.
+      icon: i-lucide-circle-off
+    - title: Effort wasn’t translating into impact.
+      description: Leads were coming in, but conversion rates were low. Processes felt disconnected, and teams were working harder, not smarter.
+      icon: i-lucide-circle-off
+    - title: Uncertainty about what was working and what wasn’t.
+      description: Without clear insights, automation, and structured workflows, they struggled to make data-driven decisions with confidence.
+      icon: i-lucide-circle-off
+
+section2:
+  title: After working with Right Brain, that changed
+  description: Instead of chasing growth, growth is happening naturally—powered by the right systems, strategies, and structure.
+  id: section1
+  image:
+    src: /images/rbg-1.png
+    width: 1200
+    height: 800
+    alt: After working with Right Brain, that changed
+  orientation: horizontal
+  reverse: true
+  features:
+    - title: Their systems run smoothly, eliminating bottlenecks.
+      icon: i-lucide-circle-check-big
+    - title: They attract, engage, and convert leads with consistency.
+      icon: i-lucide-circle-check-big
+    - title: Sales, marketing, and operations are fully aligned.
+      icon: i-lucide-circle-check-big
+    - title: They have real-time insights to make smarter decisions.
+      icon: i-lucide-circle-check-big
+    - title: Scaling feels seamless—instead of stressful.
+      icon: i-lucide-circle-check-big
+
+features:
+  title: Solutions for Scalable Growth
+  description: At Right Brain Group, we are dedicated to engineering exceptional web app and branding solutions, meticulously designed to catalyze your business' growth and success.
+  items:
+    - title: Business Process Optimization
+      description: We streamline operations by eliminating inefficiencies and automating repetitive tasks, allowing your team to focus on strategy and scale without friction.
+      icon: i-lucide-brain-cog
+    - title: Notion Consulting & ERP Implementation
+      description: We centralize your business in one system for seamless operations, providing real-time dashboards and AI-driven insights for smarter decision-making.
+      icon: i-lucide-handshake
+    - title: Workflow & Automation Solutions
+      description: We automate lead qualification, task management, and integrations to reduce manual work, ensuring your systems run efficiently so you can focus on growth.
+      icon: i-lucide-cpu
+    - title: AI-Driven Digital Optimization
+      description: We align your business with scalable digital tools and automation, enhancing workflows to create a seamless experience for teams and customers.
+      icon: i-lucide-bot-message-square
+    - title: Sales Optimization & Lead Conversion
+      description: We refine sales pipelines to increase efficiency and conversions, using automated tracking and AI insights to help you focus on high-value opportunities.
+      icon: i-lucide-percent
+    - title: Web & App Development
+      description: We build robust web and mobile solutions to fuel digital growth, using agile development and modern technology to deliver engaging user experiences.
+      icon: i-lucide-code
+    - title: Branding & Graphic Design
+      description: We craft visual identities to evoke emotional connections, using strategic design to help you build trust and captivate your audience.
+      icon: i-lucide-palette
+    - title: Project Management as a Service
+      description: We provide project management as a service, streamlining workflows and collaboration with agile tracking for timely delivery.
+      icon: i-lucide-list-todo
+    - title: UI/UX Design & Development
+      description: We create seamless digital experiences using user-centric design and agile development, delighting customers at every touchpoint.
+      icon: i-lucide-panels-top-left
+
+testimonials:
+  title: Trusted by Industry Leaders
+  description: Discover how top companies worldwide have revolutionized their digital presence with our MAGIC platform. Join the thousands who are achieving remarkable growth and efficiency today.
+  items:
+    - quote: Right Brain saw my vision for my site from day one and made it come to fruition. I love my finished product & I highly recommend RBG!
+      stars: 4
+      source: google
+      sourceLink: https://maps.app.goo.gl/ztszFgreLbc4NVes6
+      user:
+        name: Amanda Yoa
+        description: Simply Aligned LLC
+        link: https://g.co/kgs/a5xwVjP
+        avatar:
+          src: /images/avatars/female-avatar-1.svg
+          loading: lazy
+          width: 64
+          height: 64
+          alt: Avatar of Amanda Yoa
+    - quote: It has been a pleasure working with Right Brain. I recommend their team for any project. They will get it done!
+      stars: 5
+      source: facebook
+      sourceLink: https://www.facebook.com/RightBrainGroup
+      user:
+        name: Jenn Sutton
+        description: Townwide Tennis
+        link: https://g.co/kgs/JJhGU3B 
+        avatar:
+          src: /images/avatars/female-avatar-1.svg
+          loading: lazy
+          width: 64
+          height: 64
+          alt: Avatar of Jenn Sutton
+    - quote: Lee and his associates have handled the artwork for several of my CD/album covers with exceptional creativity in a very timely fashion. I'm extremely happy and comfortable with his work and plan to hire him often moving into the future.
+      stars: 4
+      source: facebook
+      sourceLink: https://www.facebook.com/RightBrainGroup
+      user:
+        name: EMan
+        description: Singer / Songwriter
+        link: https://g.co/kgs/vCqtS6k
+        avatar:
+          src: /images/avatars/male-avatar-3.svg
+          loading: lazy
+          width: 64
+          height: 64
+          alt: Avatar of EMan
+    - quote: Great Results. Gross sales doubled from 2016 to 2017, and continue to grow. A respected colleague is also now a RBG customer as well.
+      stars: 5
+      source: google
+      sourceLink: https://maps.app.goo.gl/ztszFgreLbc4NVes6
+      user:
+        name: Elizebeth Bayardi
+        description: Armand Bayardi Models
+        link: https://g.co/kgs/oc4PVjd
+        avatar:
+          src: /images/avatars/female-avatar-1.svg
+          loading: lazy
+          width: 64
+          height: 64
+          alt: Avatar of Elizebeth Bayardi
+    - quote: RBG's work integrates research, sound business planning, quality code and cutting edge design aesthetics.
+      stars: 5
+      source: facebook
+      sourceLink: https://www.facebook.com/RightBrainGroup
+      user:
+        name: Kristin Kunhardt
+        description: Valley Spirit Wellness
+        link: null
+        avatar:
+          src: /images/avatars/female-avatar-1.svg
+          loading: lazy
+          width: 64
+          height: 64
+          alt: Avatar of Kristin Kunhardt
+    - quote: Lee and his team not only designed my company's logo (nailed it!!!) but has also helped several of my clients express their unique value proposition. Creative and insightful. They "get it".
+      stars: 5
+      source: google
+      sourceLink: https://g.co/kgs/a5xwVjP
+      user:
+        name: Ed Doherty
+        description: One Degree Coaching
+        link: null
+        avatar:
+          src: /images/avatars/male-avatar-3.svg
+          loading: lazy
+          width: 64
+          height: 64
+          alt: Avatar of Ed Doherty
+    - quote: Right Brain Group pushed the limits on our design. Our site looks awesome!
+      stars: 5
+      source: google
+      sourceLink: https://g.co/kgs/a5xwVjP
+      user:
+        name: Oleg Sokolov
+        description: RS Law Group
+        link: null
+        avatar:
+          src: /images/avatars/male-avatar-3.svg
+          loading: lazy
+          width: 64
+          height: 64
+          alt: Avatar of Oleg Sokolov
+    - quote: Mind-blowing creativity combined with artistic ability took our ideas to a level that exceeded our expectations.
+      stars: 5
+      source: google
+      sourceLink: https://g.co/kgs/a5xwVjP
+      user:
+        name: Jeremy & Diana Kalen
+        description: Center For Healing & Transformation
+        link: null
+        avatar:
+          src: /images/avatars/male-avatar-3.svg
+          loading: lazy
+          width: 64
+          height: 64
+          alt: Avatar of Jeremy & Diana Kalen
+    - quote: Right Brain Group brought our vision to life. If you are looking to rebrand, tapping the brain is the way to go.
+      stars: 5
+      source: facebook
+      sourceLink: https://g.co/kgs/a5xwVjP
+      user:
+        name: Joshua Hemmingway
+        description: Burger Barr
+        link: https://burgerbarr.com
+        avatar:
+          src: /images/avatars/male-avatar-3.svg
+          loading: lazy
+          width: 64
+          height: 64
+          alt: Avatar of Joshua Hemmingway
+    - quote: Dr. Brain has handled the artwork for several of my albums with exceptional creativity. I'm extremely happy with their work.
+      stars: 4
+      source: google
+      sourceLink: https://g.co/kgs/a5xwVjP
+      user:
+        name: Cecil Parker
+        description: Cecil Parker Music
+        avatar:
+          src: /images/avatars/male-avatar-3.svg
+          loading: lazy
+          width: 64
+          height: 64
+          alt: Avatar of Cecil Parker
+blog:
+  title: Insights & Inspiration
+  description: Explore our latest articles, case studies, and insights to stay ahead in the digital landscape. Discover how Right Brain Group can help you unlock your business's full potential.
+
+faqs:
+  title: Frequently Asked Questions
+  description: We know you have questions. Here are some of the most common ones we hear from our clients.
+  items:
+    - label: What makes Right Brain different from other agencies?
+      icon: i-lucide-circle-help
+      content: We’re more than a creative agency—we're your business systems partner. By blending strategy, automation, design, and technology, we build holistic, scalable solutions that support every stage of your growth.
+    - label: I know my business has inefficiencies—can you help?
+      icon: i-lucide-circle-help
+      content: Absolutely. We specialize in identifying friction points and streamlining operations through automation, systemization, and process redesign. You’ll gain clarity, efficiency, and more time to focus on growth.
+    - label: What platforms or tools do you use?
+      icon: i-lucide-circle-help
+      content: We’re tool-agnostic but experts in Notion, Make, AI workflows, and modern dev stacks. We centralize operations in systems that are intuitive, powerful, and tailored to your unique business needs.
+    - label: I’m not tech-savvy—will I be able to use the systems you build?
+      icon: i-lucide-circle-help
+      content: Yes! Our builds are user-friendly, fully documented, and come with training. Whether you’re new to tools like Notion or already using them, we meet you where you are and scale with you.
+    - label: Do you only work with certain industries?
+      icon: i-lucide-circle-help
+      content: We work best with service-based, growth-minded businesses—coaches, consultants, agencies, startups, and teams looking to scale sustainably with smarter systems.
+    - label: What happens after launch?
+      icon: i-lucide-circle-help
+      content: We don’t disappear post-launch. We offer continued optimization, training, and support to make sure your systems evolve as your business grows.
+    - label: Can you help us automate sales or lead management?
+      icon: i-lucide-circle-help
+      content: Definitely. We optimize your sales pipeline, automate lead qualification, and use AI insights to improve conversions—so your team can focus on closing, not chasing.
+    - label: Do you do branding and design work too?
+      icon: i-lucide-circle-help
+      content: Yes—we create strategic, emotionally resonant brands that align with your business goals. From visual identity to UI/UX, we design experiences that build trust and drive action.
+    - label: How long do projects usually take?
+      icon: i-lucide-circle-help
+      content: Timelines vary by scope. A targeted automation or Notion build might take 2–4 weeks. Full digital systems or rebrands typically take 6–12+ weeks. We work in agile sprints to stay efficient and transparent.
+    - label: Can you manage our projects or help our team get organized?
+      icon: i-lucide-circle-help
+      content: Yes. We offer project management as a service—whether it's setting up systems or actively managing delivery, we help teams stay on track and aligned around goals.
+cta:
+  buttonText: Explore MAGIC
+  buttonLink: /contact
+  theme: light
+  layout: sidebar
+  rotate: true

@@ -1,0 +1,23 @@
+{
+  "extends": "./.nuxt/tsconfig.json",
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "types": ["vite/client", "@nuxt/content"],
+    "strict": false,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "target": "es2017",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["es2017", "dom"],
+    "paths": {
+      "#imports": ["./.nuxt/imports.d.ts"],
+      "#app": ["./.nuxt/app"],
+      "#build/*": ["./.nuxt/*"],
+      "@/*": ["./app/*"],
+      "~/*": ["./*"],
+      "@/types": ["./app/types/index.d.ts"],
+      "~/types": ["./app/types"]
+    }
+  }
+}
