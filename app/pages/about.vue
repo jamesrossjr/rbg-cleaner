@@ -71,6 +71,7 @@ const animateIcon = (element: HTMLElement, index: number) => {
     
     // Different movement patterns
     let x, y, rotation
+    let centerX, centerY, radius
     
     switch (index % 5) {
       case 0: // Horizontal float
@@ -88,15 +89,14 @@ const animateIcon = (element: HTMLElement, index: number) => {
         y = progress * (window.innerHeight + 100) - 50
         rotation = Math.sin(progress * Math.PI * 6) * 30
         break
-      case 3: { // Circular motion
-        const centerX = window.innerWidth * 0.7
-        const centerY = window.innerHeight * 0.5
-        const radius = 80 + (index * 10)
+      case 3: // Circular motion
+        centerX = window.innerWidth * 0.7
+        centerY = window.innerHeight * 0.5
+        radius = 80 + (index * 10)
         x = centerX + Math.cos(progress * Math.PI * 4) * radius
         y = centerY + Math.sin(progress * Math.PI * 4) * radius
         rotation = progress * 360
         break
-      }
       default: // Wave pattern
         x = progress * (window.innerWidth + 100) - 50
         y = (window.innerHeight * 0.6) + Math.sin(progress * Math.PI * 8) * 100
