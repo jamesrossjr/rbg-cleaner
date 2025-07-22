@@ -5,6 +5,115 @@ definePageMeta({
   description: 'Learn about the mission, vision, and team behind Right Brain Group. Discover how we combine creativity and systems thinking to build future-ready solutions.',
 })
 
+// Floating science icons management
+const floatingContainer = ref<HTMLElement>()
+
+onMounted(() => {
+  createFloatingIcons()
+})
+
+const createFloatingIcons = () => {
+  if (!floatingContainer.value) return
+
+  const icons = ['🧬', '⚛️', '🔬', '🧪', '🔭', '⚙️', '🧠', '🚀', '🔌', '🛰️', '⚗️', '💡', '💻', '🤖', '🪐']
+  const colors = [
+    'text-blue-400/30 dark:text-blue-300/40',
+    'text-purple-400/30 dark:text-purple-300/40', 
+    'text-indigo-400/30 dark:text-indigo-300/40',
+    'text-green-400/30 dark:text-green-300/40',
+    'text-red-400/30 dark:text-red-300/40',
+    'text-yellow-400/30 dark:text-yellow-300/40',
+    'text-pink-400/30 dark:text-pink-300/40',
+    'text-cyan-400/30 dark:text-cyan-300/40',
+    'text-orange-400/30 dark:text-orange-300/40'
+  ]
+
+  // Clear existing icons
+  floatingContainer.value.innerHTML = ''
+
+  icons.forEach((icon, index) => {
+    const iconElement = document.createElement('div')
+    iconElement.innerHTML = icon
+    iconElement.className = `absolute pointer-events-none ${colors[index % colors.length]} text-2xl z-0`
+    
+    // Distribute icons randomly across the entire viewport with some padding
+    const padding = 100
+    const startX = padding + Math.random() * (window.innerWidth - padding * 2)
+    const startY = padding + Math.random() * (window.innerHeight - padding * 2)
+    
+    iconElement.style.left = `${startX}px`
+    iconElement.style.top = `${startY}px`
+    iconElement.style.transform = 'translate(-50%, -50%)'
+    iconElement.style.opacity = '0'
+    
+    floatingContainer.value.appendChild(iconElement)
+    
+    // Fade in the icon with a delay
+    setTimeout(() => {
+      iconElement.style.transition = 'opacity 0.5s ease-in-out'
+      iconElement.style.opacity = '1'
+    }, index * 200)
+    
+    // Animate the icon after fade in
+    setTimeout(() => {
+      animateIcon(iconElement, index)
+    }, (index * 200) + 500)
+  })
+}
+
+const animateIcon = (element: HTMLElement, index: number) => {
+  const duration = 20000 + (index * 2000) // 20-50 seconds
+  const startTime = Date.now()
+  
+  const animate = () => {
+    const elapsed = Date.now() - startTime
+    const progress = (elapsed % duration) / duration
+    
+    // Different movement patterns
+    let x, y, rotation
+    
+    switch (index % 5) {
+      case 0: // Horizontal float
+        x = progress * (window.innerWidth + 100) - 50
+        y = 100 + Math.sin(progress * Math.PI * 4) * 50
+        rotation = progress * 360
+        break
+      case 1: // Diagonal movement
+        x = progress * (window.innerWidth + 100) - 50
+        y = progress * (window.innerHeight + 100) - 50
+        rotation = progress * 720
+        break
+      case 2: // Vertical bounce
+        x = (window.innerWidth * 0.2) + (index * 60)
+        y = progress * (window.innerHeight + 100) - 50
+        rotation = Math.sin(progress * Math.PI * 6) * 30
+        break
+      case 3: // Circular motion
+        const centerX = window.innerWidth * 0.7
+        const centerY = window.innerHeight * 0.5
+        const radius = 80 + (index * 10)
+        x = centerX + Math.cos(progress * Math.PI * 4) * radius
+        y = centerY + Math.sin(progress * Math.PI * 4) * radius
+        rotation = progress * 360
+        break
+      default: // Wave pattern
+        x = progress * (window.innerWidth + 100) - 50
+        y = (window.innerHeight * 0.6) + Math.sin(progress * Math.PI * 8) * 100
+        rotation = progress * 180
+        break
+    }
+    
+    element.style.left = `${x}px`
+    element.style.top = `${y}px`
+    element.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`
+    
+    requestAnimationFrame(animate)
+  }
+  
+  // Start with random delay
+  setTimeout(() => animate(), index * 1000)
+}
+
 // Team member data
 const teamMembers = [
   {
@@ -146,9 +255,12 @@ const selectedTestimonials = [
 </script>
 
 <template>
-  <div>
+  <div class="relative overflow-hidden">
+    <!-- Floating Science Icons Background -->
+    <div ref="floatingContainer" class="fixed inset-0 pointer-events-none z-0"></div>
     <!-- Hero Section -->
     <UPageHero
+      class="relative z-10"
       description="A human-centered studio blending creativity with technology to build future-ready systems, brands, and platforms. We help organizations evolve with intention, resilience, and humanity."
     >
       <template #title>
@@ -195,6 +307,7 @@ const selectedTestimonials = [
     <UPageSection 
       title="Our Mission & Philosophy" 
       description="We exist to help companies and creators bridge the gap between inspired ideas and scalable action."
+      class="relative z-10"
     >
       <div class="grid gap-8 lg:grid-cols-2">
         <UCard class="p-8">
@@ -233,6 +346,7 @@ const selectedTestimonials = [
     <UPageSection 
       title="Our Core Values" 
       description="These principles guide everything we do, from strategy to execution."
+      class="relative z-10"
     >
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
         <div v-for="value in values" :key="value.title" class="text-center">
@@ -249,6 +363,7 @@ const selectedTestimonials = [
     <UPageSection 
       title="Meet the Team" 
       description="The passionate individuals behind Right Brain Group, each bringing unique expertise to help transform your business."
+      class="relative z-10"
     >
       <div class="grid gap-12 lg:gap-16">
         <div 
@@ -312,6 +427,7 @@ const selectedTestimonials = [
     <UPageSection 
       title="What We Do" 
       description="We offer a suite of services that bring structure to creativity, combining strategic clarity with smart execution."
+      class="relative z-10"
     >
       <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-12">
         <div v-for="capability in capabilities" :key="capability" 
@@ -336,6 +452,7 @@ const selectedTestimonials = [
     <UPageSection 
       title="Trusted by Leaders" 
       description="See what our clients have to say about working with Right Brain Group."
+      class="relative z-10"
     >
       <div class="grid gap-8 lg:grid-cols-3">
         <UCard v-for="testimonial in selectedTestimonials" :key="testimonial.author" class="p-6">
@@ -368,6 +485,7 @@ const selectedTestimonials = [
     <UPageSection 
       title="Frequently Asked Questions" 
       description="Common questions about working with Right Brain Group and our approach to business transformation."
+      class="relative z-10"
     >
       <UPageAccordion
         :items="faqs"
@@ -377,7 +495,7 @@ const selectedTestimonials = [
     </UPageSection>
 
     <!-- CTA Section -->
-    <UPageSection>
+    <UPageSection class="relative z-10">
       <div class="text-center space-y-6">
         <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
           Ready to Transform Your Business?
@@ -397,3 +515,4 @@ const selectedTestimonials = [
     </UPageSection>
   </div>
 </template>
+
