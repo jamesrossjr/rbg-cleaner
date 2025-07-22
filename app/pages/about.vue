@@ -149,9 +149,26 @@ const selectedTestimonials = [
   <div>
     <!-- Hero Section -->
     <UPageHero
-      title="About Right Brain Group"
       description="A human-centered studio blending creativity with technology to build future-ready systems, brands, and platforms. We help organizations evolve with intention, resilience, and humanity."
     >
+      <template #title>
+        <div class="flex flex-col items-center justify-center">
+          <NuxtImg
+            src="/images/dr-brain.webp"
+            alt="Right Brain Group - Creative and analytical collaboration"
+            width="260"
+            height="260"
+            class="mx-auto mb-6"
+            style="max-width: 260px"
+            format="webp"
+            loading="lazy"
+          />
+          <span class="text-center">
+            About Right Brain Group
+          </span>
+        </div>
+      </template>
+
       <template #links>
         <div class="flex flex-col sm:flex-row gap-4">
           <UButton 
@@ -173,22 +190,6 @@ const selectedTestimonials = [
         </div>
       </template>
     </UPageHero>
-
-    <!-- Dr Brain Image -->
-    <UContainer class="py-8">
-      <div class="flex justify-center">
-        <NuxtImg
-          src="/images/dr-brain.webp"
-          alt="Right Brain Group - Creative and analytical collaboration"
-          width="260"
-          height="260"
-          class="mx-auto"
-          style="max-width: 260px"
-          format="webp"
-          loading="lazy"
-        />
-      </div>
-    </UContainer>
 
     <!-- Mission & Philosophy Section -->
     <UPageSection 
