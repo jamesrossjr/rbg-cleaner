@@ -9,7 +9,7 @@ const route = useRoute()
 
 // Get blog posts
 const { data: posts } = await useAsyncData(route.path, () =>
-  queryCollection('blog').all()
+  queryCollection('posts').all()
 )
 
 useSeoMeta({
@@ -25,9 +25,13 @@ defineOgImageComponent('Saas')
 const sortedPosts = computed(() => {
   if (!posts.value) return { featured: [], recent: [] }
   
-  const sorted = [...posts.value].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  const featured = sorted.filter(post => post.featured)
-  const recent = sorted.filter(post => !post.featured)
+  const sorted = [...posts.value].sort((a, b) => {
+    const aDate = ('date' in a && typeof a.date === 'string') ? a.date : ''
+    const bDate = ('date' in b && typeof b.date === 'string') ? b.date : ''
+    return new Date(bDate).getTime() - new Date(aDate).getTime()
+  })
+  const featured = sorted.filter(post => 'featured' in post && post.featured)
+  const recent = sorted.filter(post => !('featured' in post && post.featured))
   
   return { featured, recent }
 })
@@ -38,7 +42,7 @@ const categories = computed(() => {
   
   const tagSet = new Set<string>()
   posts.value.forEach(post => {
-    if (post.badge?.label) {
+    if ('badge' in post && post.badge && typeof post.badge === 'object' && 'label' in post.badge && typeof post.badge.label === 'string') {
       tagSet.add(post.badge.label)
     }
   })
@@ -91,16 +95,16 @@ const categories = computed(() => {
       </div>
       
       <NuxtLink 
-        :to="sortedPosts.featured[0].path"
+        :to="'path' in sortedPosts.featured[0] ? sortedPosts.featured[0].path : undefined"
         class="group block"
       >
         <article class="grid lg:grid-cols-2 gap-12 items-center">
           <div class="lg:order-2">
             <div class="aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-900">
               <NuxtImg
-                v-if="sortedPosts.featured[0].image?.src"
+                v-if="'image' in sortedPosts.featured[0] && sortedPosts.featured[0].image && typeof sortedPosts.featured[0].image === 'object' && 'src' in sortedPosts.featured[0].image && typeof sortedPosts.featured[0].image.src === 'string'"
                 :src="sortedPosts.featured[0].image.src"
-                :alt="sortedPosts.featured[0].image.alt || sortedPosts.featured[0].title"
+                :alt="('alt' in sortedPosts.featured[0].image && typeof sortedPosts.featured[0].image.alt === 'string') ? sortedPosts.featured[0].image.alt : ('title' in sortedPosts.featured[0] && typeof sortedPosts.featured[0].title === 'string') ? sortedPosts.featured[0].title : ''"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 format="webp"
                 loading="lazy"
@@ -109,29 +113,29 @@ const categories = computed(() => {
           </div>
           <div class="lg:order-1">
             <div class="flex items-center space-x-3 mb-4">
-              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                {{ sortedPosts.featured[0].badge?.label }}
+              <span v-if="'badge' in sortedPosts.featured[0] && sortedPosts.featured[0].badge && typeof sortedPosts.featured[0].badge === 'object' && 'label' in sortedPosts.featured[0].badge" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                {{ sortedPosts.featured[0].badge.label }}
               </span>
-              <time class="text-sm text-gray-600 dark:text-gray-400">
+              <time v-if="'date' in sortedPosts.featured[0] && typeof sortedPosts.featured[0].date === 'string'" class="text-sm text-gray-600 dark:text-gray-400">
                 {{ new Date(sortedPosts.featured[0].date).toLocaleDateString('en', { year: 'numeric', month: 'long', day: 'numeric' }) }}
               </time>
             </div>
-            <h1 class="text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight group-hover:text-primary transition-colors">
+            <h1 v-if="'title' in sortedPosts.featured[0] && typeof sortedPosts.featured[0].title === 'string'" class="text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight group-hover:text-primary transition-colors">
               {{ sortedPosts.featured[0].title }}
             </h1>
-            <p class="text-xl text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+            <p v-if="'description' in sortedPosts.featured[0] && typeof sortedPosts.featured[0].description === 'string'" class="text-xl text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
               {{ sortedPosts.featured[0].description }}
             </p>
             <div class="flex items-center space-x-4">
-              <div v-if="sortedPosts.featured[0].authors" class="flex items-center space-x-3">
+              <div v-if="'authors' in sortedPosts.featured[0] && Array.isArray(sortedPosts.featured[0].authors) && sortedPosts.featured[0].authors.length > 0" class="flex items-center space-x-3">
                 <img 
-                  v-if="sortedPosts.featured[0].authors[0]?.avatar?.src"
+                  v-if="sortedPosts.featured[0].authors[0] && typeof sortedPosts.featured[0].authors[0] === 'object' && 'avatar' in sortedPosts.featured[0].authors[0] && sortedPosts.featured[0].authors[0].avatar && typeof sortedPosts.featured[0].authors[0].avatar === 'object' && 'src' in sortedPosts.featured[0].authors[0].avatar && typeof sortedPosts.featured[0].authors[0].avatar.src === 'string'"
                   :src="sortedPosts.featured[0].authors[0].avatar.src" 
-                  :alt="sortedPosts.featured[0].authors[0].name"
+                  :alt="'name' in sortedPosts.featured[0].authors[0] && typeof sortedPosts.featured[0].authors[0].name === 'string' ? sortedPosts.featured[0].authors[0].name : ''"
                   class="w-10 h-10 rounded-full">
                 <div>
-                  <div class="text-sm font-medium text-gray-900 dark:text-white">
-                    {{ sortedPosts.featured[0].authors[0]?.name }}
+                  <div v-if="sortedPosts.featured[0].authors[0] && typeof sortedPosts.featured[0].authors[0] === 'object' && 'name' in sortedPosts.featured[0].authors[0] && typeof sortedPosts.featured[0].authors[0].name === 'string'" class="text-sm font-medium text-gray-900 dark:text-white">
+                    {{ sortedPosts.featured[0].authors[0].name }}
                   </div>
                 </div>
               </div>
@@ -154,16 +158,16 @@ const categories = computed(() => {
       <!-- Stories Grid -->
       <div v-if="sortedPosts.recent.length > 0" class="grid lg:grid-cols-3 gap-12">
         <article 
-          v-for="post in sortedPosts.recent" 
-          :key="post.path"
+          v-for="(post, index) in sortedPosts.recent" 
+          :key="'path' in post && typeof post.path === 'string' ? post.path : `post-${index}`"
           class="group"
         >
-          <NuxtLink :to="post.path" class="block">
+          <NuxtLink :to="'path' in post && typeof post.path === 'string' ? post.path : undefined" class="block">
             <div class="aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-900 mb-6">
               <NuxtImg
-                v-if="post.image?.src"
+                v-if="'image' in post && post.image && typeof post.image === 'object' && 'src' in post.image && typeof post.image.src === 'string'"
                 :src="post.image.src"
-                :alt="post.image.alt || post.title"
+                :alt="('alt' in post.image && typeof post.image.alt === 'string') ? post.image.alt : ('title' in post && typeof post.title === 'string') ? post.title : ''"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 format="webp"
                 loading="lazy"
@@ -171,31 +175,31 @@ const categories = computed(() => {
             </div>
             
             <div class="flex items-center space-x-3 mb-3">
-              <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                {{ post.badge?.label }}
+              <span v-if="'badge' in post && post.badge && typeof post.badge === 'object' && 'label' in post.badge && typeof post.badge.label === 'string'" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                {{ post.badge.label }}
               </span>
-              <time class="text-sm text-gray-600 dark:text-gray-400">
+              <time v-if="'date' in post && typeof post.date === 'string'" class="text-sm text-gray-600 dark:text-gray-400">
                 {{ new Date(post.date).toLocaleDateString('en', { month: 'short', day: 'numeric' }) }}
               </time>
             </div>
             
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3 leading-tight group-hover:text-primary transition-colors">
+            <h2 v-if="'title' in post && typeof post.title === 'string'" class="text-xl font-bold text-gray-900 dark:text-white mb-3 leading-tight group-hover:text-primary transition-colors">
               {{ post.title }}
             </h2>
             
-            <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4 line-clamp-3">
+            <p v-if="'description' in post && typeof post.description === 'string'" class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4 line-clamp-3">
               {{ post.description }}
             </p>
             
             <div class="flex items-center justify-between">
-              <div v-if="post.authors" class="flex items-center space-x-2">
+              <div v-if="'authors' in post && Array.isArray(post.authors) && post.authors.length > 0" class="flex items-center space-x-2">
                 <img 
-                  v-if="post.authors[0]?.avatar?.src"
+                  v-if="post.authors[0] && typeof post.authors[0] === 'object' && 'avatar' in post.authors[0] && post.authors[0].avatar && typeof post.authors[0].avatar === 'object' && 'src' in post.authors[0].avatar && typeof post.authors[0].avatar.src === 'string'"
                   :src="post.authors[0].avatar.src" 
-                  :alt="post.authors[0].name"
+                  :alt="'name' in post.authors[0] && typeof post.authors[0].name === 'string' ? post.authors[0].name : ''"
                   class="w-6 h-6 rounded-full">
-                <span class="text-sm text-gray-600 dark:text-gray-400">
-                  {{ post.authors[0]?.name }}
+                <span v-if="post.authors[0] && typeof post.authors[0] === 'object' && 'name' in post.authors[0] && typeof post.authors[0].name === 'string'" class="text-sm text-gray-600 dark:text-gray-400">
+                  {{ post.authors[0].name }}
                 </span>
               </div>
               <span class="text-sm text-gray-500 dark:text-gray-500">3 min read</span>

@@ -235,20 +235,20 @@ watchEffect(() => {
         >
           <template #default="{ item }">
               <NuxtLink
-                :to="typeof item === 'object' && item !== null && '_path' in item ? (item as any)._path : undefined"
+                :to="typeof item === 'object' && item !== null && '_path' in item && typeof item._path === 'string' ? item._path : undefined"
                 class="relative block"
               >
                 <div class="rounded-xl shadow-xl bg-white dark:bg-gray-900">
                   <template v-if="typeof item === 'object' && item !== null">
                     <img
-                      v-if="item.image?.src"
-                      :src="item.image?.src || '/placeholder.jpg'"
-                      :alt="item.image.alt || item.title"
+                      v-if="'image' in item && item.image && typeof item.image === 'object' && 'src' in item.image && typeof item.image.src === 'string'"
+                      :src="item.image.src"
+                      :alt="('alt' in item.image && typeof item.image.alt === 'string') ? item.image.alt : ('title' in item && typeof item.title === 'string') ? item.title : ''"
                       class="w-full h-64 object-cover rounded-t-xl"
                     >
                     <div class="p-4">
-                      <h3 class="text-xl font-semibold mb-2">{{ item.title || 'Untitled' }}</h3>
-                      <p class="text-sm text-gray-600 dark:text-gray-400">{{ item.excerpt || item.description || 'No description available.' }}</p>
+                      <h3 class="text-xl font-semibold mb-2">{{ ('title' in item && typeof item.title === 'string') ? item.title : 'Untitled' }}</h3>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">{{ ('excerpt' in item && typeof item.excerpt === 'string') ? item.excerpt : ('description' in item && typeof item.description === 'string') ? item.description : 'No description available.' }}</p>
                     </div>
                   </template>
                 </div>
@@ -394,7 +394,7 @@ watchEffect(() => {
           <template #default="{ item }">
             <UBlogPost
               v-bind="typeof item === 'object' && item !== null ? item : {}"
-              :to="typeof item === 'object' && item !== null && 'path' in item ? item.path : undefined"
+              :to="typeof item === 'object' && item !== null && 'path' in item && typeof item.path === 'string' ? item.path : undefined"
               variant="naked"
               :badge="getBadgePropsFromItem(typeof item === 'object' && item !== null ? item : { badge: { label: 'General' } })"
               :ui="{ 

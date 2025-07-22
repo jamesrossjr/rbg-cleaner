@@ -7,7 +7,7 @@
 
 import type { Config } from 'tailwindcss'
 
-const _config: Config = {
+const _config: Config & { safelist?: (string | Record<string, unknown>)[] } = {
   darkMode: 'class',
   content: {
     files: [
@@ -20,7 +20,6 @@ const _config: Config = {
       './content/**/*.{md,json,yml,yaml}'
     ]
   },
-  // @ts-expect-error - safelist is supported by Nuxt Tailwind module but not in base Tailwind Config type
   // 🛡️ Safelist for dynamic or CMS-driven classes to prevent purge issues
   safelist: [
     'bg-secondary',
@@ -160,5 +159,6 @@ const _config: Config = {
   },
 
   plugins: [],
-} satisfies Config as typeof _config
-export default _config
+}
+
+export default _config as Config

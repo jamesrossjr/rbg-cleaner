@@ -1,1 +1,5 @@
-<!-- This component is no longer used with the new editorial design -->
+<template>
+  <div>
+    <!-- This component is no longer used with the new editorial design -->
+  </div>
+</template>

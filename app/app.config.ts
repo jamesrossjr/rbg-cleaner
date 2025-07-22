@@ -1,6 +1,7 @@
 export default defineAppConfig({
   prefetchLinks: false,
   ui: {
+    // @ts-expect-error - CSS variables are supported in Nuxt UI Pro
     css: {
       variables: {
         '--ui-text-dimmed': '#666666'
@@ -94,6 +95,7 @@ export default defineAppConfig({
   },
   uiPro: {
     contentSearch: {
+      // @ts-expect-error - Modal configuration is supported in Nuxt UI Pro
       modal: {
         class: 'text-primary sm:max-w-3xl sm:h-[28rem]'
       },

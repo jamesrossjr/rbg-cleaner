@@ -6,17 +6,40 @@ definePageMeta({
 const route = useRoute()
 
 const { data: post } = await useAsyncData(`post-${route.params.slug}`, () =>
-  queryCollection('blog').path(`/blog/${route.params.slug}`).first()
+  queryCollection('posts').path(`/blog/${route.params.slug}`).first()
 )
 
 const { data: relatedPosts } = await useAsyncData(`related-${route.params.slug}`, () =>
-  queryCollection('blog').limit(3).all()
+  queryCollection('posts').limit(3).all()
 )
 
+// Type guards and safe accessors
+const safePost = computed(() => {
+  if (!post.value) return null
+  return post.value
+})
+
+const safeBlogPosts = computed(() => {
+  if (!relatedPosts.value) return []
+  return relatedPosts.value.filter(p => 
+    p && 
+    typeof p === 'object' &&
+    'path' in p && typeof p.path === 'string' &&
+    'title' in p && typeof p.title === 'string' &&
+    'description' in p && typeof p.description === 'string' &&
+    'date' in p && typeof p.date === 'string'
+  )
+})
+
 // Type guard to check for null or undefined post.value
-if (post.value) {
-  const title = post.value.seo?.title || post.value.title
-  const description = post.value.seo?.description || post.value.description
+if (post.value && typeof post.value === 'object') {
+  const title = ('seo' in post.value && post.value.seo && typeof post.value.seo === 'object' && 'title' in post.value.seo && typeof post.value.seo.title === 'string') 
+    ? post.value.seo.title 
+    : ('title' in post.value && typeof post.value.title === 'string') ? post.value.title : ''
+  
+  const description = ('seo' in post.value && post.value.seo && typeof post.value.seo === 'object' && 'description' in post.value.seo && typeof post.value.seo.description === 'string') 
+    ? post.value.seo.description 
+    : ('description' in post.value && typeof post.value.description === 'string') ? post.value.description : ''
 
   useSeoMeta({
     title,
@@ -25,7 +48,7 @@ if (post.value) {
     ogDescription: description
   })
 
-  if (post.value.image?.src) {
+  if ('image' in post.value && post.value.image && typeof post.value.image === 'object' && 'src' in post.value.image && typeof post.value.image.src === 'string') {
     defineOgImage({
       url: post.value.image.src
     })
@@ -40,14 +63,14 @@ if (post.value) {
 </script>
 
 <template>
-  <div v-if="post" class="min-h-screen bg-white dark:bg-gray-950">
+  <div v-if="safePost" class="min-h-screen bg-white dark:bg-gray-950">
     <!-- Hero Image -->
-    <div v-if="post.image?.src" class="relative h-[60vh] lg:h-[70vh] overflow-hidden">
+    <div v-if="'image' in safePost && safePost.image && typeof safePost.image === 'object' && 'src' in safePost.image && typeof safePost.image.src === 'string'" class="relative h-[60vh] lg:h-[70vh] overflow-hidden">
       <NuxtImg
-        :src="post.image.src"
-        :alt="post.image.alt || post.title"
-        :width="post.image.width || 1920"
-        :height="post.image.height || 1080"
+        :src="safePost.image.src"
+        :alt="(safePost.image && 'alt' in safePost.image && typeof safePost.image.alt === 'string') ? safePost.image.alt : ('title' in safePost && typeof safePost.title === 'string') ? safePost.title : ''"
+        :width="(safePost.image && 'width' in safePost.image && typeof safePost.image.width === 'number') ? safePost.image.width : 1920"
+        :height="(safePost.image && 'height' in safePost.image && typeof safePost.image.height === 'number') ? safePost.image.height : 1080"
         class="w-full h-full object-cover"
         format="webp"
         loading="eager"
@@ -65,47 +88,47 @@ if (post.value) {
               Insights
             </NuxtLink>
             <span class="text-gray-400">/</span>
-            <span class="text-gray-900 dark:text-white">{{ post.title }}</span>
+            <span class="text-gray-900 dark:text-white">{{ safePost.title }}</span>
           </nav>
         </div>
 
         <!-- Article Meta -->
         <div class="mb-8">
           <div class="flex items-center space-x-4 mb-4">
-            <span v-if="post.badge" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary">
-              {{ post.badge.label }}
+            <span v-if="'badge' in safePost && safePost.badge && typeof safePost.badge === 'object' && 'label' in safePost.badge && typeof safePost.badge.label === 'string'" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary">
+              {{ safePost.badge.label }}
             </span>
-            <time class="text-sm text-gray-600 dark:text-gray-400">
-              {{ new Date(post.date).toLocaleDateString('en', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+            <time v-if="'date' in safePost && typeof safePost.date === 'string'" class="text-sm text-gray-600 dark:text-gray-400">
+              {{ new Date(safePost.date).toLocaleDateString('en', { year: 'numeric', month: 'long', day: 'numeric' }) }}
             </time>
             <span class="text-sm text-gray-600 dark:text-gray-400">5 min read</span>
           </div>
         </div>
 
         <!-- Title -->
-        <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-8 leading-tight">
-          {{ post.title }}
+        <h1 v-if="'title' in safePost && typeof safePost.title === 'string'" class="text-4xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-8 leading-tight">
+          {{ safePost.title }}
         </h1>
 
         <!-- Description -->
-        <p class="text-xl lg:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed mb-12">
-          {{ post.description }}
+        <p v-if="'description' in safePost && typeof safePost.description === 'string'" class="text-xl lg:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed mb-12">
+          {{ safePost.description }}
         </p>
 
         <!-- Author -->
-        <div v-if="post.authors" class="border-t border-b border-gray-200 dark:border-gray-800 py-8 mb-12">
+        <div v-if="'authors' in safePost && Array.isArray(safePost.authors) && safePost.authors.length > 0" class="border-t border-b border-gray-200 dark:border-gray-800 py-8 mb-12">
           <div class="flex items-start space-x-4">
             <img 
-              v-if="post.authors[0]?.avatar?.src"
-              :src="post.authors[0].avatar.src" 
-              :alt="post.authors[0].name"
+              v-if="safePost.authors[0] && typeof safePost.authors[0] === 'object' && 'avatar' in safePost.authors[0] && safePost.authors[0].avatar && typeof safePost.authors[0].avatar === 'object' && 'src' in safePost.authors[0].avatar && typeof safePost.authors[0].avatar.src === 'string'"
+              :src="safePost.authors[0].avatar.src" 
+              :alt="'name' in safePost.authors[0] && typeof safePost.authors[0].name === 'string' ? safePost.authors[0].name : ''"
               class="w-16 h-16 rounded-full">
             <div class="flex-1">
-              <div class="font-semibold text-gray-900 dark:text-white text-lg mb-1">
-                {{ post.authors[0]?.name }}
+              <div v-if="safePost.authors[0] && typeof safePost.authors[0] === 'object' && 'name' in safePost.authors[0] && typeof safePost.authors[0].name === 'string'" class="font-semibold text-gray-900 dark:text-white text-lg mb-1">
+                {{ safePost.authors[0].name }}
               </div>
-              <div v-if="post.authors[0]?.bio" class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                {{ post.authors[0].bio }}
+              <div v-if="safePost.authors[0] && typeof safePost.authors[0] === 'object' && 'bio' in safePost.authors[0] && typeof safePost.authors[0].bio === 'string'" class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                {{ safePost.authors[0].bio }}
               </div>
             </div>
           </div>
@@ -124,15 +147,15 @@ if (post.value) {
                   prose-blockquote:border-l-primary prose-blockquote:bg-primary/5 prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:not-italic
                   prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded
                   prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-800">
-        <ContentRenderer :value="post" />
+        <ContentRenderer :value="safePost" />
       </div>
 
       <!-- Tags -->
-      <div v-if="post.tags && post.tags.length > 0" class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+      <div v-if="'tags' in safePost && Array.isArray(safePost.tags) && safePost.tags.length > 0" class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
         <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wide">Topics</h3>
         <div class="flex flex-wrap gap-2">
           <span
-            v-for="tag in post.tags"
+            v-for="tag in safePost.tags"
             :key="tag"
             class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer"
           >
@@ -162,7 +185,7 @@ if (post.value) {
     </article>
 
     <!-- Related Articles -->
-    <div v-if="relatedPosts && relatedPosts.length > 0" class="bg-gray-50 dark:bg-gray-900 mt-24">
+    <div v-if="safeBlogPosts && safeBlogPosts.length > 0" class="bg-gray-50 dark:bg-gray-900 mt-24">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div class="mb-12">
           <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">More Insights</h2>
@@ -171,16 +194,16 @@ if (post.value) {
         
         <div class="grid lg:grid-cols-3 gap-12">
           <article 
-            v-for="relatedPost in relatedPosts.slice(0, 3)" 
-            :key="relatedPost.path"
+            v-for="relatedPost in safeBlogPosts.slice(0, 3)" 
+            :key="'path' in relatedPost && typeof relatedPost.path === 'string' ? relatedPost.path : `post-${relatedPost}`"
             class="group"
           >
-            <NuxtLink :to="relatedPost.path" class="block">
+            <NuxtLink :to="'path' in relatedPost && typeof relatedPost.path === 'string' ? relatedPost.path : undefined" class="block">
               <div class="aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 mb-6">
                 <NuxtImg
-                  v-if="relatedPost.image?.src"
+                  v-if="'image' in relatedPost && relatedPost.image && typeof relatedPost.image === 'object' && 'src' in relatedPost.image && typeof relatedPost.image.src === 'string'"
                   :src="relatedPost.image.src"
-                  :alt="relatedPost.image.alt || relatedPost.title"
+                  :alt="('alt' in relatedPost.image && typeof relatedPost.image.alt === 'string') ? relatedPost.image.alt : ('title' in relatedPost && typeof relatedPost.title === 'string') ? relatedPost.title : ''"
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   format="webp"
                   loading="lazy"
@@ -188,19 +211,19 @@ if (post.value) {
               </div>
               
               <div class="flex items-center space-x-3 mb-3">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                  {{ relatedPost.badge?.label }}
+                <span v-if="'badge' in relatedPost && relatedPost.badge && typeof relatedPost.badge === 'object' && 'label' in relatedPost.badge && typeof relatedPost.badge.label === 'string'" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                  {{ relatedPost.badge.label }}
                 </span>
-                <time class="text-sm text-gray-600 dark:text-gray-400">
+                <time v-if="'date' in relatedPost && typeof relatedPost.date === 'string'" class="text-sm text-gray-600 dark:text-gray-400">
                   {{ new Date(relatedPost.date).toLocaleDateString('en', { month: 'short', day: 'numeric' }) }}
                 </time>
               </div>
               
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 leading-tight group-hover:text-primary transition-colors">
+              <h3 v-if="'title' in relatedPost && typeof relatedPost.title === 'string'" class="text-xl font-bold text-gray-900 dark:text-white mb-3 leading-tight group-hover:text-primary transition-colors">
                 {{ relatedPost.title }}
               </h3>
               
-              <p class="text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-2">
+              <p v-if="'description' in relatedPost && typeof relatedPost.description === 'string'" class="text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-2">
                 {{ relatedPost.description }}
               </p>
             </NuxtLink>

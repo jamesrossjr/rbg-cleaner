@@ -8,7 +8,7 @@
     "baseUrl": ".",
     "target": "es2017",
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "lib": ["es2017", "dom"],
     "paths": {
       "#imports": ["./.nuxt/imports.d.ts"],
