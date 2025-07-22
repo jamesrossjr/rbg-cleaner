@@ -88,7 +88,7 @@ const animateIcon = (element: HTMLElement, index: number) => {
         y = progress * (window.innerHeight + 100) - 50
         rotation = Math.sin(progress * Math.PI * 6) * 30
         break
-      case 3: // Circular motion
+      case 3: { // Circular motion
         const centerX = window.innerWidth * 0.7
         const centerY = window.innerHeight * 0.5
         const radius = 80 + (index * 10)
@@ -96,6 +96,7 @@ const animateIcon = (element: HTMLElement, index: number) => {
         y = centerY + Math.sin(progress * Math.PI * 4) * radius
         rotation = progress * 360
         break
+      }
       default: // Wave pattern
         x = progress * (window.innerWidth + 100) - 50
         y = (window.innerHeight * 0.6) + Math.sin(progress * Math.PI * 8) * 100
@@ -257,7 +258,7 @@ const selectedTestimonials = [
 <template>
   <div class="relative overflow-hidden">
     <!-- Floating Science Icons Background -->
-    <div ref="floatingContainer" class="fixed inset-0 pointer-events-none z-0"></div>
+    <div ref="floatingContainer" class="fixed inset-0 pointer-events-none z-0" />
     <!-- Hero Section -->
     <UPageHero
       class="relative z-10"
@@ -430,8 +431,11 @@ const selectedTestimonials = [
       class="relative z-10"
     >
       <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-12">
-        <div v-for="capability in capabilities" :key="capability" 
-             class="flex items-center gap-3 p-4 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800">
+        <div
+          v-for="capability in capabilities"
+          :key="capability"
+          class="flex items-center gap-3 p-4 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800"
+        >
           <UIcon name="i-lucide-check-circle" class="h-5 w-5 text-primary flex-shrink-0" />
           <span class="font-medium text-sm">{{ capability }}</span>
         </div>

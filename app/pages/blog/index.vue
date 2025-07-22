@@ -25,7 +25,7 @@ defineOgImageComponent('Saas')
 const sortedPosts = computed(() => {
   if (!posts.value) return { featured: [], recent: [] }
   
-  const sorted = posts.value.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  const sorted = [...posts.value].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   const featured = sorted.filter(post => post.featured)
   const recent = sorted.filter(post => !post.featured)
   
@@ -87,7 +87,7 @@ const categories = computed(() => {
     <div v-if="sortedPosts.featured.length > 0" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div class="mb-8">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Featured</h2>
-        <div class="w-12 h-0.5 bg-primary"></div>
+        <div class="w-12 h-0.5 bg-primary" />
       </div>
       
       <NuxtLink 
@@ -128,8 +128,7 @@ const categories = computed(() => {
                   v-if="sortedPosts.featured[0].authors[0]?.avatar?.src"
                   :src="sortedPosts.featured[0].authors[0].avatar.src" 
                   :alt="sortedPosts.featured[0].authors[0].name"
-                  class="w-10 h-10 rounded-full"
-                />
+                  class="w-10 h-10 rounded-full">
                 <div>
                   <div class="text-sm font-medium text-gray-900 dark:text-white">
                     {{ sortedPosts.featured[0].authors[0]?.name }}
@@ -149,7 +148,7 @@ const categories = computed(() => {
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-gray-200 dark:border-gray-800">
       <div class="mb-12">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Latest Stories</h2>
-        <div class="w-12 h-0.5 bg-primary"></div>
+        <div class="w-12 h-0.5 bg-primary" />
       </div>
 
       <!-- Stories Grid -->
@@ -194,8 +193,7 @@ const categories = computed(() => {
                   v-if="post.authors[0]?.avatar?.src"
                   :src="post.authors[0].avatar.src" 
                   :alt="post.authors[0].name"
-                  class="w-6 h-6 rounded-full"
-                />
+                  class="w-6 h-6 rounded-full">
                 <span class="text-sm text-gray-600 dark:text-gray-400">
                   {{ post.authors[0]?.name }}
                 </span>

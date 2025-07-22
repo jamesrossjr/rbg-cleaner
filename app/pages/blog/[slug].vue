@@ -52,7 +52,7 @@ if (post.value) {
         format="webp"
         loading="eager"
       />
-      <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
     </div>
 
     <!-- Article Header -->
@@ -99,8 +99,7 @@ if (post.value) {
               v-if="post.authors[0]?.avatar?.src"
               :src="post.authors[0].avatar.src" 
               :alt="post.authors[0].name"
-              class="w-16 h-16 rounded-full"
-            />
+              class="w-16 h-16 rounded-full">
             <div class="flex-1">
               <div class="font-semibold text-gray-900 dark:text-white text-lg mb-1">
                 {{ post.authors[0]?.name }}
@@ -116,7 +115,8 @@ if (post.value) {
 
     <!-- Article Content -->
     <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="prose prose-lg lg:prose-xl dark:prose-invert max-w-none
+      <div 
+        class="prose prose-lg lg:prose-xl dark:prose-invert max-w-none
                   prose-headings:text-gray-900 dark:prose-headings:text-white
                   prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed
                   prose-a:text-primary prose-a:no-underline hover:prose-a:underline
@@ -166,7 +166,7 @@ if (post.value) {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div class="mb-12">
           <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">More Insights</h2>
-          <div class="w-12 h-0.5 bg-primary"></div>
+          <div class="w-12 h-0.5 bg-primary" />
         </div>
         
         <div class="grid lg:grid-cols-3 gap-12">
